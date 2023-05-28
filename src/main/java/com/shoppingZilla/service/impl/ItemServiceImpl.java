@@ -32,7 +32,7 @@ public class ItemServiceImpl implements ItemService {
         }
 
         Product product = productOptional.get();
-        Customer customer = customerRepository.getByEmailId(itemRequestDto.getCustomerEmailId());
+        Customer customer = customerRepository.findByEmailId(itemRequestDto.getCustomerEmailId());
         if(customer == null){
             throw new CustomerNotFoundException("Customer doesn't exist");
         }
@@ -42,9 +42,10 @@ public class ItemServiceImpl implements ItemService {
         if(itemRequestDto.getQuantity() > product.getQuantity()){
             throw new InsufficientQuantityException("Required Quantity is not present");
         }
-        product.setQuantity(product.getQuantity() - itemRequestDto.getQuantity());
 
         Item item = ItemTransformer.itemReuestDtoToItem(itemRequestDto);
+        item.setProduct(product);
+        item.setCart(customer.getCart());
 
 
         return item;

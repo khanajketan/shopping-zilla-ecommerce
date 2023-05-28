@@ -39,8 +39,7 @@ public class Card {
     @JoinColumn
     Customer customer;
 
-    @OneToMany(mappedBy = "cardUsed",cascade = CascadeType.ALL)
-    List<OrderEntity> orders = new ArrayList<>();
+
 
 
 }

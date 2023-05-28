@@ -17,7 +17,7 @@ public class CardServiceImpl implements CardService {
     CustomerRepository customerRepository;
     @Override
     public CardResponseDto addCard(CardRequestDto cardRequestDto) throws CustomerNotFoundException {
-        Customer customer = customerRepository.getByEmailId(cardRequestDto.getCustomerEmailId());
+        Customer customer = customerRepository.findByEmailId(cardRequestDto.getCustomerEmailId());
         if(customer == null){
             throw new CustomerNotFoundException("Customer Email ID is not Found");
         }

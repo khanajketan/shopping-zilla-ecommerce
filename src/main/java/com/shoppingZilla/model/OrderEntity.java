@@ -2,13 +2,10 @@ package com.shoppingZilla.model;
 
 import com.shoppingZilla.Enum.CardType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 @Table(name = "order_entity")
 public class OrderEntity {
     @Id
@@ -26,14 +24,16 @@ public class OrderEntity {
 
 
     @Column(name = "order_no")
-    int orderNo;
+    String orderNo;//
 
     @Column(name = "orderd_date")
-    Date orderedDate;
+    Date orderedDate;//
 
-    @ManyToOne
-    @JoinColumn
-    Card cardUsed;
+    @Column(name = "total_price")
+    int totalPrice;//
+
+    @Column(name = "card_used")
+    String cardUsed;//
 
     @ManyToOne
     @JoinColumn

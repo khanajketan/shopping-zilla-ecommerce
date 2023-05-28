@@ -1,10 +1,9 @@
 package com.shoppingZilla.repository;
 
-import com.shoppingZilla.model.Seller;
+import com.shoppingZilla.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SellerRepository extends JpaRepository<Seller, Integer> {
-    Seller findByEmailId(String email);
+public interface CartRepository extends JpaRepository<Cart, Integer> {
 }

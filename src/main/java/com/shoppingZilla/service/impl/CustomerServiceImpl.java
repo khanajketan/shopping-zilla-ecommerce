@@ -24,6 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .customer(customer)
                 .build();
 
+        customer.setCart(cart);
         // adding customer and cart to db
         Customer savedCustomer = customerRepository.save(customer);
 
