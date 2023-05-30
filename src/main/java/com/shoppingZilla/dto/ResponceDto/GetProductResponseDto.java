@@ -1,15 +1,18 @@
 package com.shoppingZilla.dto.ResponceDto;
 
+import com.shoppingZilla.Enum.ProductStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class ItemResponseDto {
-    String name;
-    int quantity;
+public class GetProductResponseDto {
+    int id;
     int price;
+    String name;
+    ProductStatus status;
+    String sellerName;
 }

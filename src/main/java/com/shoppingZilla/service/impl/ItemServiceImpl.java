@@ -45,6 +45,7 @@ public class ItemServiceImpl implements ItemService {
 
         Item item = ItemTransformer.itemReuestDtoToItem(itemRequestDto);
         item.setProduct(product);
+        item.setPrice(product.getPrice());
         item.setCart(customer.getCart());
 
 

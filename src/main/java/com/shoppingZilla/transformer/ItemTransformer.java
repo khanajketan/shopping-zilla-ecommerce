@@ -15,6 +15,7 @@ public class ItemTransformer {
         ItemResponseDto itemResponseDto = ItemResponseDto.builder()
                 .name(item.getProduct().getName())
                 .quantity(item.getRequiredQuantity())
+                .price(item.getPrice())
                 .build();
         return itemResponseDto;
     }

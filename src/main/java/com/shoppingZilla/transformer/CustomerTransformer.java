@@ -11,6 +11,7 @@ public class CustomerTransformer {
                 .name(customerRequestDto.getName())
                 .emailId(customerRequestDto.getEmailId())
                 .age(customerRequestDto.getAge())
+                .address(customerRequestDto.getAddress())
                 .mobNo(customerRequestDto.getMobNo())
                 .gender(customerRequestDto.getGender())
                 .build();

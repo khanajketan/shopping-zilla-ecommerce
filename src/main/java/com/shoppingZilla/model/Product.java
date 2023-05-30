@@ -31,6 +31,9 @@ public class Product {
     @Column(name = "price")
     int price;
 
+    @Column(name = "product_description")
+    String productDescription;
+
     @Column(name = "product_status")
     @Enumerated(EnumType.STRING)
     ProductStatus status;
@@ -45,5 +48,8 @@ public class Product {
     @ManyToOne
     @JoinColumn
     Seller seller;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    List<Review> reviews = new ArrayList<>();
 
 }

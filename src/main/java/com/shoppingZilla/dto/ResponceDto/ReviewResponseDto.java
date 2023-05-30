@@ -3,13 +3,15 @@ package com.shoppingZilla.dto.ResponceDto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.sql.Date;
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class ItemResponseDto {
-    String name;
-    int quantity;
-    int price;
+public class ReviewResponseDto {
+    String customerName;
+    Date date;
+    String description;
 }

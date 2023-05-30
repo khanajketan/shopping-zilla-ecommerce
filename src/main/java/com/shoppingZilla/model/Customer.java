@@ -33,6 +33,9 @@ public class Customer {
     @Column(name = "age")
     int age;
 
+    @Column(name = "address")
+    String address;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     Gender gender;
@@ -45,6 +48,9 @@ public class Customer {
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     Cart cart;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    List<Review> reviews = new ArrayList<>();
 
 
 }

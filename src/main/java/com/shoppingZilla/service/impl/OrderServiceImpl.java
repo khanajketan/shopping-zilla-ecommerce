@@ -5,6 +5,7 @@ import com.shoppingZilla.dto.RequestDto.OrderRequestDto;
 import com.shoppingZilla.dto.ResponceDto.ItemResponseDto;
 import com.shoppingZilla.dto.ResponceDto.OrderResponseDto;
 import com.shoppingZilla.exception.*;
+import com.shoppingZilla.mails.Mail;
 import com.shoppingZilla.model.*;
 import com.shoppingZilla.repository.CardRepository;
 import com.shoppingZilla.repository.CustomerRepository;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.shoppingZilla.Enum.ProductStatus.OUT_OF_STOCK;
+
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
@@ -32,6 +35,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     ItemService itemService;
+
+    @Autowired
+    Mail mail;
+
 
     @Override
     public OrderResponseDto placeOrder(OrderRequestDto orderRequestDto) throws CustomerNotFoundException, ProductNotFoundException, InvalidCardDetailsException, OutOfStockException, InsufficientQuantityException {
@@ -46,7 +53,18 @@ public class OrderServiceImpl implements OrderService {
         }
         Product product = optionalProduct.get();
 
+        //if required quantity of product is not present
+        if(product.getQuantity() < orderRequestDto.getQuantity()){
+            throw new InsufficientQuantityException("Required quantity not present");
+        }
+
+        // if product out of stock
+        if(product.getQuantity() == 0){
+            throw new OutOfStockException("This product is out of stock");
+        }
+
         Card card = cardRepository.findByCardNo(orderRequestDto.getCardNo());
+        //if card not present
         if(card == null || card.getCvv() != orderRequestDto.getCvv()){
             throw new InvalidCardDetailsException("Please enter valid details");
         }
@@ -74,6 +92,22 @@ public class OrderServiceImpl implements OrderService {
         List<ItemResponseDto> itemResponseDtos = new ArrayList<>();
         itemResponseDtos.add(ItemTransformer.itemToItemResponseDto(item));
         orderResponseDto.setItems(itemResponseDtos);
+
+        //decreasing placed products in db
+        product.setQuantity(product.getQuantity() - orderRequestDto.getQuantity());
+
+        // checking product is instock or not
+        if(product.getQuantity() == 0){
+            product.setStatus(OUT_OF_STOCK);
+        }
+
+        // updating the quantity of products
+        productRepository.save(product);
+
+        //Sending confirmation mail to customer
+        mail.confirmationMailToCustomer(customer, orderEntity, itemResponseDtos);
+        mail.sellerNotificationMail(customer,orderEntity,product,itemResponseDtos.get(0).getQuantity());
+
 
         return orderResponseDto;
     }

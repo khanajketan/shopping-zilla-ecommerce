@@ -15,4 +15,5 @@ public class CustomerRequestDto {
     String mobNo;
     int age;
     Gender gender;
+    String address;
 }

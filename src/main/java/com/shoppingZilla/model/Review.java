@@ -4,34 +4,33 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.sql.Date;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-@Table(name = "item")
-public class Item {
+@Table(name = "review")
+public class Review {
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     int id;
 
-    @Column(name = "required_quantity")
-    int requiredQuantity;
+    @Column(name = "description")
+    String description;
 
-    @Column(name = "price")
-    int price;
-
-    @ManyToOne
-    @JoinColumn
-    Cart cart;
-
-    @ManyToOne
-    @JoinColumn
-    OrderEntity orderEntity;
+    @Column(name = "date")
+    Date date;
 
     @ManyToOne
     @JoinColumn
     Product product;
+
+    @ManyToOne
+    @JoinColumn
+    Customer customer;
 }
